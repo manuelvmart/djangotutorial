@@ -12,7 +12,8 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
     creator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True)
-
+    #is_finished = models.BooleanField(default=False)
+    #is_paused = models.BooleanField(default=False)
     @admin.display(
         boolean=True,
         ordering="pub_date",
@@ -57,4 +58,13 @@ class Answers(models.Model):
         if not self.pk: 
             self.creator = get_user_model().objects.first()
         super().save(*args, **kwargs)
+
+
+
+"""class ALLOWED(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True)
+ 
+    def __str__(self):
+        return self.choice_text"""
 

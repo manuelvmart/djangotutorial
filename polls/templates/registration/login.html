@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Web Page Login</title>
+    <title>Iniciar Sesion</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
@@ -14,15 +14,15 @@
     {% block content %}
     
       {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
+      <p>Su nombre de usuario y contraseña no coinciden. Por favor, inténtalo de nuevo.</p>
       {% endif %}
     
       {% if next %}
         {% if user.is_authenticated %}
-          <p>Your account doesn't have access to this page. To proceed,
-          please login with an account that has access.</p>
+        <p>Su cuenta no tiene acceso a esta página. Para proceder,
+          inicie sesión con una cuenta que tenga acceso.</p>
         {% else %}
-          <p>Please login to see this page.</p>
+        <p>Inicie sesión para ver esta página.</p>
         {% endif %}
       {% endif %}
     
@@ -43,7 +43,7 @@
       </form>
     
       {# Assumes you set up the password_reset view in your URLconf #}
-      <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+      <p><a href="{% url 'password_reset' %}">¿Perdiste tu contraseña?</a></p>
     
     {% endblock %}
   </div>
