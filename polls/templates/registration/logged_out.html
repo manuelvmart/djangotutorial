@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>cerrar Sesion</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <script src="script.js"></script>
+  </head>
+  <body>
+  
+    {% block content %}
+    <p>¡Sesión finalizada!</p>
+    
+    <a href="{% url 'login'%}">Haga clic aquí para iniciar sesión nuevamente.</a>
+    {% endblock %}
+  </body>
+</html>

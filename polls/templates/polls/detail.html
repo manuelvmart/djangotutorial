@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pagina de detalless</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Detalle pregunta!</h1>
+ <form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h2>{{ question.question_text }}</h2></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+</fieldset>
+<input type="submit" value="Vote" class="button4">
+</form>
+<h3>Respuestas del usuario:</h3>
+<ul>
+  {% if user.is_authenticated %}
+    {% with answers=user.answers_set.all %}
+      {% if question.id == user.answers_set.first.question_id %}
+        <li>Esta pregunta ya ha sido respondida.</li>
+      {% endif %}
+    {% endwith %}
+  {% else %}
+    <li>Debes iniciar sesión para ver tus respuestas.</li>
+  {% endif %}
+</ul>
+
+
+  </body>
+</html>

@@ -1,0 +1,42 @@
+body{
+    background: white url("images/pexels.jpg") no-repeat;
+}
+
+
+  ul {
+    background: rgb(164, 249, 255);
+    padding: 20px;
+  }
+  
+
+  
+  ul li {
+    background: #ffffffe1;
+    color: rgb(4, 142, 255);
+    margin: 5px;
+  }
+h1,h2{
+    color: rgb(207, 250, 253);
+}
+
+p{
+    color: rgb(207, 250, 253);
+}
+
+label{
+    color: rgb(169, 233, 238);
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color:rgb(207, 250, 253);
+    border: none;
+    color: black;
+    padding: 16px 32px;
+    text-decoration: none;
+
+    margin: 41px 2px;
+    cursor: pointer;
+  }
+
+
+ 
