@@ -9,8 +9,8 @@
     <script src="script.js"></script>
   </head>
   <body>
-  
-
+  <div class="centro">
+    <img src="{% static 'polls/images/polls.jpg' %}" alt="Cinque Terre" width="300" height="200" style=" border-radius: 8px;">
     {% block content %}
     
       {% if form.errors %}
@@ -26,14 +26,14 @@
         {% endif %}
       {% endif %}
     
-      <form method="post" action="{% url 'login' %}">
+      <form method="post" action="{% url 'login' %}" >
         {% csrf_token %}
-        <table>
-          <tr>
+        <table style="margin: auto; ">
+          <tr >
             <td>{{ form.username.label_tag }}</td>
             <td>{{ form.username }}</td>
           </tr>
-          <tr>
+          <tr >
             <td>{{ form.password.label_tag }}</td>
             <td>{{ form.password }}</td>
           </tr>
@@ -46,5 +46,6 @@
       <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
     
     {% endblock %}
+  </div>
     </body>
 </html>
