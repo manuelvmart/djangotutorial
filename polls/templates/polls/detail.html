@@ -12,9 +12,9 @@
     <h1>Detalle pregunta!</h1>
 
     
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and not question.is_finished %}
     {% with answers=user.answers_set.all %}
-      {% if question.id == user.answers_set.first.question_id %}
+      {% if is_anwered %}
       <h3 style="color: white;">UPPS Ya contestaste esta pregunta</h3>
 
         <p>Esta pregunta ya ha sido respondida.</p>
@@ -42,21 +42,33 @@
           <li style="color: black;">
             {{ answer.voter.username }} Respondio:
             {{ answer.choice.choice_text }}
+            {% if request.user == answer.voter %}
+              <form action="{% url 'polls:cancel_answer' answer.id question.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Cancelar respuesta" class="btn btn-danger">
+              </form>
+            {% endif %}
           </li>
         {% endfor %}
       </ul>
     {% else %}
       <p>Sin Respuestas.</p>
     {% endif %}
-  {% endwith %}
-  
+{% endwith %}
 
+  
+  <!--{% if question.creator.id == user.id %}
+
+  <Button class="button">Finalizar</Button>
+{% endif %}
   {% else %}
-    <li>Debes iniciar sesión para ver tus respuestas.</li>
+    <h2>Pregunta Finalizaada</h2>
+    <Button class="button">Ver Resultados</Button>
   </ul>
-  {% endif %}
-<Button class="button">Pausar </Button>
-<Button class="button">Finalizar</Button>
+  {% endif %}-->
+
+
+
 </div>
   </body>
 </html>

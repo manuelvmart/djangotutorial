@@ -10,9 +10,9 @@
   </head>
   <body>
     <h1>Tutorial  Resultados Django!</h1>
-    <h1>{{ question.question_text }}</h1>
+    <h1 >{{ question.question_text }}</h1>
 
-    <ul>
+    <ul style="color: black;">
     {% for choice in question.choice_set.all %}
         <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
     {% endfor %}
