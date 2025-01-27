@@ -63,15 +63,17 @@
     {% csrf_token %}
     <input type="submit" value="Finalizar Pregunta" class="btn btn-danger">
   </form>
+
+  <form action="{% url 'polls:resume_question' question.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Reaundar Pregunta" class="btn btn-danger">
+  </form>
 {% endif %}
   {% else %}
     <h2>Pregunta Finalizaada</h2>
     <a href="{% url 'polls:results' question.id %}">Ver Resultados</a> </ul>
 
-    <form action="{% url 'polls:resume_question' question.id %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="Reaundar Pregunta" class="btn btn-danger">
-    </form>
+   
   {% endif %}
 
   <button onclick="location.href='/polls'" class="button">Inicio</button>

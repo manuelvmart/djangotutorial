@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Choice, Question,Answers
+from .models import Choice, Question,Answers,Not_allowed
 
 
 class IndexView(generic.ListView):
@@ -18,8 +18,15 @@ class IndexView(generic.ListView):
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+        model = Question
+        current_user = self.request.user
+        
+        queryset = Question.objects.order_by("-pub_date")
+        
+        not_allowed_ids = Not_allowed.objects.filter(user=current_user).values_list('question_id', flat=True)
+        queryset = queryset.exclude(id__in=not_allowed_ids)
+        
+        return queryset[:5]
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
