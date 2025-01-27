@@ -57,7 +57,7 @@
 {% endwith %}
 
   
-  <!--{% if question.creator.id == user.id %}
+  {% if question.creator.id == user.id %}
 
   <Button class="button">Finalizar</Button>
 {% endif %}
@@ -65,7 +65,7 @@
     <h2>Pregunta Finalizaada</h2>
     <Button class="button">Ver Resultados</Button>
   </ul>
-  {% endif %}-->
+  {% endif %}
 
   <button onclick="location.href='/polls'" class="button">Inicio</button>
 
