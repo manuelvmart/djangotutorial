@@ -15,9 +15,9 @@
   {% if user.is_authenticated and not question.is_finished %}
     {% with answers=user.answers_set.all %}
       {% if is_anwered %}
+      <legend><h2>{{ question.question_text }}</h2></legend>
       <h3 style="color: white;">UPPS Ya contestaste esta pregunta</h3>
-
-        <p>Esta pregunta ya ha sido respondida.</p>
+      
         {% else %}
         <p >No haz Respondido esta Pregunta.</p>
         <form action="{% url 'polls:vote' question.id %}" method="post">
@@ -37,13 +37,13 @@
     {% with answers=question.answers_set.all %}
     {% if answers %}
       <h2>Respuestas:</h2>
-      <ul style="margin-left: 120px;">
+      <ul >
         {% for answer in answers %}
           <li style="color: black;">
             {{ answer.voter.username }} Respondio:
             {{ answer.choice.choice_text }}
             {% if request.user == answer.voter %}
-              <form action="{% url 'polls:cancel_answer' answer.id question.id %}" method="post">
+              <form action="{% url 'polls:cancel_answer' question.id  answer.id %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Cancelar respuesta" class="btn btn-danger">
               </form>
@@ -82,7 +82,7 @@
  
 
   <button onclick="location.href='/polls'" class="button">Inicio</button>
-
+  <a href="{% url 'polls:results' question.id %}">Ver Resultados</a> </ul>
 
 </div>
   </body>

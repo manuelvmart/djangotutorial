@@ -9,10 +9,13 @@
     <script src="script.js"></script>
   </head>
   <body>
-  <div class="centro">
-    <img src="{% static 'polls/images/polls.jpg' %}" alt="Cinque Terre" width="300" height="200" style=" border-radius: 8px;">
-    {% block content %}
-    
+    <div class="login-container">
+      <div class="logo-container">
+        <img src="{% static 'polls/images/usuario.png' %}" alt="Logo" class="login-logo">
+      </div>
+      
+      {% block content %}
+        
       {% if form.errors %}
       <p>Su nombre de usuario y contraseña no coinciden. Por favor, inténtalo de nuevo.</p>
       {% endif %}
@@ -26,26 +29,25 @@
         {% endif %}
       {% endif %}
     
-      <form method="post" action="{% url 'login' %}" >
-        {% csrf_token %}
-        <table style="margin: auto; ">
-          <tr >
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-          </tr>
-          <tr >
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-          </tr>
-        </table>
-        <input type="submit" value="login">
-        <input type="hidden" name="next" value="{{ next }}">
-      </form>
+      <p style="color: rgb(169, 233, 238); text-align: center;">Ingrese sus credenciales</p>
+        
+        <form method="post" action="{% url 'login' %}" class="login-form">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form.username.label_tag }}<br>
+            {{ form.username }}
+          </div>
+          <div class="form-group">
+            {{ form.password.label_tag }}<br>
+            {{ form.password }}
+          </div>
+        <div class="centro_content"><button type="submit" class="btn btn-primary">Login</button></div>
+          <input type="hidden" name="next" value="{{ next }}">
+        </form>
     
-      {# Assumes you set up the password_reset view in your URLconf #}
-      <p><a href="{% url 'password_reset' %}">¿Perdiste tu contraseña?</a></p>
-    
-    {% endblock %}
-  </div>
+        <p><a href="{% url 'password_reset' %}" class="forgot-password">¿Perdiste tu contraseña?</a></p>
+        {% endblock %}
+      </div>
+    </div>
     </body>
 </html>

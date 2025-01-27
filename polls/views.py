@@ -71,19 +71,27 @@ def detail(request, question_id):
     
     return render(request, 'polls/detail.html', {'question': question, 'answers': answers})
 
-def cancel_answer(request, answer_id, question_id):
+def cancel_answer(request,  answer_id,question_id,):
     question = get_object_or_404(Question, pk=question_id)
     answer = get_object_or_404(Answers, id=answer_id)
-    if request.user == answer.voter:
-        answer.delete()
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "You didn't select a choice.",
-            },
-        )
+    
+    if request.method == 'POST':
+        if request.user == answer.voter:
+            choice = get_object_or_404(Choice, pk=answer.choice_id)
+            
+            # Decrement vote count
+            choice.votes -= 1
+            
+            # Save the updated Choice
+            choice.save()
+            
+            # Delete the answer
+            answer.delete()
+        
+        return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
+    
+    # If we're not POST, just show the page
+    return render(request, 'polls/detail.html', {'question': question})
 
 
 
@@ -91,28 +99,22 @@ def end_answer(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     
     if request.method == 'POST':
-        # Mark the question as finished
         question.is_finished = True
         question.save()
     
-        # Redirect to the resultado page
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
     
-    # Handle GET request
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 def resume_question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     
     if request.method == 'POST':
-        # Mark the question as finished
         question.is_finished = False
         question.save()
     
-        # Redirect to the resultado page
         return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
     
-    # Handle GET request
     return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
    
 
