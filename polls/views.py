@@ -6,7 +6,7 @@ from django.db.models import F
 from django.views import generic
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Choice, Question,Answers
@@ -72,6 +72,36 @@ def cancel_answer(request, answer_id, question_id):
                 "error_message": "You didn't select a choice.",
             },
         )
+
+
+
+def end_answer(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    
+    if request.method == 'POST':
+        # Mark the question as finished
+        question.is_finished = True
+        question.save()
+    
+        # Redirect to the resultado page
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+    
+    # Handle GET request
+    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+def resume_question(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    
+    if request.method == 'POST':
+        # Mark the question as finished
+        question.is_finished = False
+        question.save()
+    
+        # Redirect to the resultado page
+        return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
+    
+    # Handle GET request
+    return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
    
 
 class ResultsView(generic.DetailView):
@@ -114,7 +144,14 @@ def vote(request, question_id):
 
 class ResultadoView(generic.DetailView):
     model = Question
-    template_name = "polls/results.html"
+    template_name = "polls/resultado.html"
+
+def resultado(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    # Add your logic here to display the results
+    return render(request, 'polls/resultado.html', {'question': question})
+
+
 
 
 
