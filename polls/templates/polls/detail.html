@@ -57,24 +57,29 @@
 {% endwith %}
 
   
-  {% if question.creator.id == user.id %}
+  {% if question.creator.id == user.id and question.is_finished == False %}
 
   <form action="{% url 'polls:end_answer' question.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Finalizar Pregunta" class="btn btn-danger">
   </form>
 
+ 
+{% endif %}
+{% else %}
+<h2>Pregunta Finalizaada</h2>
+<a href="{% url 'polls:results' question.id %}">Ver Resultados</a> </ul>
+
+
+{% endif %}
+{% if question.creator.id == user.id and question.is_finished == True %}
+
   <form action="{% url 'polls:resume_question' question.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Reaundar Pregunta" class="btn btn-danger">
   </form>
 {% endif %}
-  {% else %}
-    <h2>Pregunta Finalizaada</h2>
-    <a href="{% url 'polls:results' question.id %}">Ver Resultados</a> </ul>
-
-   
-  {% endif %}
+ 
 
   <button onclick="location.href='/polls'" class="button">Inicio</button>
 
