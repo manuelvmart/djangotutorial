@@ -11,7 +11,7 @@
   <body><div class="centro">
     <h1>Tutorial Django! Preguntas</h1>
     {% if latest_question_list %}
-    <ul style="margin-left: 120px;">
+    <ul >
     {% for question in latest_question_list %}
     <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}

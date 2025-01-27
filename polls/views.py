@@ -20,13 +20,18 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         model = Question
         current_user = self.request.user
-        
-        queryset = Question.objects.order_by("-pub_date")
-        
-        not_allowed_ids = Not_allowed.objects.filter(user=current_user).values_list('question_id', flat=True)
-        queryset = queryset.exclude(id__in=not_allowed_ids)
-        
-        return queryset[:5]
+
+        if current_user.is_authenticated:
+            queryset = Question.objects.order_by("-pub_date")
+            
+            not_allowed_ids = Not_allowed.objects.filter(user=current_user).values_list('question_id', flat=True)
+            queryset = queryset.exclude(id__in=not_allowed_ids)
+        else:
+            queryset = Question.objects.order_by("-pub_date") 
+            
+        queryset = queryset[:5]  
+        return queryset
+
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
