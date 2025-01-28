@@ -3,8 +3,7 @@ from django.utils import timezone
 import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.db import models
-from django.utils.timezone import now as timezone_now
+
 
 from django.contrib import admin
   

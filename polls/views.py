@@ -58,9 +58,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return context_data
     
 
-    
-        
-
 
 def detail(request, question_id):
     model = Answers
@@ -79,18 +76,18 @@ def cancel_answer(request,  answer_id,question_id,):
         if request.user == answer.voter:
             choice = get_object_or_404(Choice, pk=answer.choice_id)
             
-            # Decrement vote count
+           
             choice.votes -= 1
             
-            # Save the updated Choice
+           
             choice.save()
             
-            # Delete the answer
+            
             answer.delete()
         
         return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
     
-    # If we're not POST, just show the page
+   
     return render(request, 'polls/detail.html', {'question': question})
 
 
@@ -155,15 +152,6 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
     
-
-class ResultadoView(generic.DetailView):
-    model = Question
-    template_name = "polls/resultado.html"
-
-def resultado(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    # Add your logic here to display the results
-    return render(request, 'polls/resultado.html', {'question': question})
 
 
 
