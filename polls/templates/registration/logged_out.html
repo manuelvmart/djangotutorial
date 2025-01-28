@@ -9,13 +9,13 @@
     <script src="script.js"></script>
   </head>
   <body>
-  
+    <div class="centro">
     {% block content %}
-    <p>¡Sesión finalizada!</p>
+    <p style="margin-top: 300px;">¡Sesión finalizada!</p>
     
     <a href="{% url 'login'%}">Haga clic aquí para iniciar sesión nuevamente.</a>
   <br>
-    <a href="{% url 'polls:index'%}">Ir al Inicio.</a>
+    <a href="{% url 'polls:index'%}">Ir al Inicio.</a></div>
     {% endblock %}
   </body>
 </html>                                                                                                                                                                                                                                                                     
