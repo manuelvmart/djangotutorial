@@ -67,3 +67,14 @@ class Not_allowed(models.Model):
     def __str__(self):
         return self.request
 
+class Persona(models.Model):
+                nombre =  models.CharField(max_length=200)
+                edad  =   models.IntegerField(default=0)
+                
+class Alumno(models.Model):
+    nombres=models.CharField(max_length=255)
+    apellido_paterno=models.CharField(max_length=255)
+    apellido_materno=models.CharField(max_length=255)
+    fecha_nacimiento= models.DateField("Born date")
+    grado=models.CharField(max_length=255)
+    grupo=models.CharField(max_length=10)

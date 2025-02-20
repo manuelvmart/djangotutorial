@@ -5,32 +5,16 @@ Vista para resolver peticiones de Polls
 from django.db.models import F
 from django.views import generic
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Choice, Question,Answers,Not_allowed
 
 
-class IndexView(generic.ListView):
-    """Vista para listar los polls"""
-    template_name = "polls/index.html"
-    context_object_name = "latest_question_list"
+def index(request):
+    return HttpResponse("Hola Mundo")
 
-    def get_queryset(self):
-        model = Question
-        current_user = self.request.user
-
-        if current_user.is_authenticated:
-            queryset = Question.objects.order_by("-pub_date")
-            
-            not_allowed_ids = Not_allowed.objects.filter(user=current_user).values_list('question_id', flat=True)
-            queryset = queryset.exclude(id__in=not_allowed_ids)
-        else:
-            queryset = Question.objects.order_by("-pub_date") 
-            
-        queryset = queryset[:5]  
-        return queryset
 
 
 
